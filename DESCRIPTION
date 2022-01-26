@@ -1,10 +1,11 @@
 Package: templatr
-Title: What the Package Does (One Line, Title Case)
+Title: Easily Create Templated R and 'RStudio' Projects
 Version: 0.0.0.9000
 Authors@R: 
     person("Jonathan", "Trattner", , "jdt@jdtrat.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1097-7603"))
-Description: What the package does (one paragraph).
+Description: Easily create R and 'R Studio' Projects by 
+  specifying a project structure as YAML.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: es
