@@ -1,0 +1,14 @@
+project:
+  name: templatr-demo
+  structure:
+    - README.md
+    - R:
+      - 01_import_data.R
+      - 02_clean_data.R
+    - data:
+      - sample.csv
+    - stan-files:
+    - reports:
+  git-ignore:
+    - "data"
+    - "R/01_import_data.R"
