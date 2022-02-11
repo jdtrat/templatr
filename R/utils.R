@@ -22,14 +22,23 @@ use_file <- function(path, ignore = FALSE) {
   invisible(TRUE)
 }
 
+has_file_ext <- function(path) {
+  vapply(path, function(x) {
+    if (fs::path_ext(x) != "") TRUE else FALSE
+  }, FUN.VALUE = logical(1))
+}
+
 #' Returns File Path for Demo Project Template
 #'
+#' @param name (Optional) name to specify the template file path. Defaults to
+#'   'demo-proj' template.
 #' @return Path to Template YAML file
 #' @export
 #'
 #' @examples
 #' cat(readLines(template_demo_project()), sep = "\n")
-template_demo_project <- function() {
-  system.file("templates/demo-proj.yaml",
-              package = "templatr")
+template_demo_project <- function(name = "demo-proj") {
+  system.file(paste0("templates/yaml-files/", name, ".yaml"),
+              package = "templatr"
+              )
 }

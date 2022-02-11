@@ -20,7 +20,9 @@ demo_proj <- list(
 
 test_that("`parse_proj_temmplate` works", {
   expect_snapshot(
-    parse_proj_template(template_demo_project())
+    parse_proj_template(
+      template_demo_project()
+      )
   )
 })
 
@@ -35,3 +37,37 @@ test_that("`parse_proj_files` works", {
     c("README.md", "R/01_import_data.R", "R/02_clean_data.R", "data/sample.csv")
   )
 })
+
+test_that("`parse_proj_file_structure` works", {
+  expect_equal(
+    parse_proj_file_structure(demo_proj),
+    data.frame(
+      name = c("README.md", "R/01_import_data.R", "R/02_clean_data.R", "data/sample.csv"),
+      source = NA_character_,
+      type = "file"
+    )
+  )
+
+  expect_equal(
+    parse_proj_file_structure(
+      template_list = parse_proj_template(
+        template_demo_project("demo-proj-source")
+        )
+      ),
+    data.frame(
+      stringsAsFactors = FALSE,
+      name = c(".Renviron","README.md",
+               "NEWS.md","R/01_import_data.R","R/02_clean_data.R",
+               "R/03_model_data.R",
+               "data/source = \"inst/source-files/data\"",
+               "reports/source = \"inst/source-files/reports\""),
+      source = c("inst/source-files/sample.Renviron",
+                 "inst/source-files/README.md",NA,"inst/source-files/R/temp_import_data.R",
+                 "inst/source-files/R/temp_clean_data.R",
+                 NA,
+                 NA,
+                 NA),
+      type = "file"
+      )
+  )
+  })

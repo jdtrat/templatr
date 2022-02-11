@@ -4,7 +4,11 @@
 \alias{template_demo_project}
 \title{Returns File Path for Demo Project Template}
 \usage{
-template_demo_project()
+template_demo_project(name = "demo-proj")
+}
+\arguments{
+\item{name}{(Optional) name to specify the template file path. Defaults to
+'demo-proj' template.}
 }
 \value{
 Path to Template YAML file

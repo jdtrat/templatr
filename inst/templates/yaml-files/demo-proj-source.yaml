@@ -1,0 +1,22 @@
+project:
+  name: templatr-demo
+  structure:
+    - .Renviron
+      - source = "inst/source-files/sample.Renviron"
+    - README.md
+      - source = "inst/source-files/README.md"
+    - NEWS.md
+    - R:
+      - 01_import_data.R
+        - source = "inst/source-files/R/temp_import_data.R"
+      - 02_clean_data.R
+        - source = "inst/source-files/R/temp_clean_data.R"
+      - 03_model_data.R
+    - data:
+      - source = "inst/source-files/data"
+    - stan-files:
+    - reports:
+      - source = "inst/source-files/reports"
+  git-ignore:
+    - "data"
+    - "R/01_import_data.R"
