@@ -23,5 +23,6 @@ Imports:
     withr,
     rlang,
     rstudioapi,
-    yaml
+    yaml,
+    cli
 VignetteBuilder: knitr

@@ -21,7 +21,7 @@ use_source_directory <- function(path, source, ignore = FALSE) {
   )
 
   if (ignore) {
-    usethis:::use_build_ignore(path)
+    usethis::use_build_ignore(path)
   }
   invisible(TRUE)
 }

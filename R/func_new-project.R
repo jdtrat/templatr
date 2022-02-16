@@ -1,3 +1,14 @@
+
+# Utility function, returns character from project structure with info needed to create files/directories
+which_to_create <- function(proj_structure, type) {
+  proj_structure[proj_structure$type == type & is.na(proj_structure$source),]$name
+}
+
+# Utility function, returns data frame from project structure with info needed to copy files/directories
+which_to_copy <- function(proj_structure, type) {
+  proj_structure[proj_structure$type == type & !is.na(proj_structure$source),]
+}
+
 #' Create New Project
 #'
 #' @param path A file path for where the new project should be created.
@@ -21,14 +32,28 @@
 #' @examples
 #'
 #' \dontrun{
-#' new_project("~/Desktop/templatr-demo/", template = template_demo_project())
+#'   # Bare bones project with no existing content
+#'   new_project(
+#'     path = "~/Desktop/templatr-demo/",
+#'     template = template_demo_project()
+#'   )
+#'   # Project with files that have some structure
+#'   new_project(
+#'     path = "~/Desktop/templatr-demo/",
+#'     template = template_demo_project("demo-proj-source")
+#'   )
 #' }
 #'
 new_project <- function(path, template,
                         rstudio = rstudioapi::isAvailable(),
                         open = rlang::is_interactive()) {
 
+  cur_dir <- getwd()
   template <- parse_proj_template(template)
+
+  project_structure <- parse_project_structure(
+    template_list = template
+  )
 
   # Replaced tilde expansion for user's home directory
   path <- fs::path_expand(path)
@@ -54,11 +79,39 @@ new_project <- function(path, template,
   create_directory(path)
   usethis::local_project(path, force = TRUE)
 
-  dirs <- parse_proj_directories(template)
-  files <- parse_proj_files(template)
 
-  for (i in seq_along(dirs)) usethis::use_directory(dirs[i])
-  for (i in seq_along(files)) use_file(files[i])
+  dirs_to_create <- which_to_create(project_structure, "directory")
+  dirs_to_copy <- which_to_copy(project_structure, "directory")
+
+  for (i in seq_along(dirs_to_create)) usethis::use_directory(dirs_to_create[i])
+  if (nrow(dirs_to_copy) > 0) {
+    for (i in 1:nrow(dirs_to_copy)) {
+      use_source_directory(
+        path = dirs_to_copy$name[i],
+        source = fs::path_abs(
+          dirs_to_copy$source[i],
+          start = cur_dir
+        )
+      )
+    }
+  }
+
+  files_to_create <- which_to_create(project_structure, "file")
+  files_to_copy <- which_to_copy(project_structure, "file")
+
+  for (i in seq_along(files_to_create)) use_file(files_to_create[i])
+
+  if (nrow(files_to_copy) > 0) {
+    for (i in 1:nrow(files_to_copy)) {
+      use_source_file(
+        path = files_to_copy$name[i],
+        source = fs::path_abs(
+          files_to_copy$source[i],
+          start = cur_dir
+        )
+      )
+    }
+  }
 
   if (rstudio) {
     usethis::use_rstudio()
