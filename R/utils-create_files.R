@@ -20,9 +20,11 @@ create_source_file <- function(path, source) {
   if (fs::file_exists(path)) {
     return(invisible(FALSE))
   }
-  fs::file_copy(path = source,
-               new_path = path,
-               overwrite = FALSE)
+  fs::file_copy(
+    path = source,
+    new_path = path,
+    overwrite = FALSE
+  )
   usethis::ui_done("Copying {usethis::ui_path(source)} to {usethis::ui_path(path)}")
   invisible(TRUE)
 }

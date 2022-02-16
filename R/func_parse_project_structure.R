@@ -18,11 +18,14 @@ parse_project_structure <- function(template_list) {
   files <- parse_proj_files(template_list = template_list)
 
   # Get indices for which of the directories have 'source = '
-  dirs_with_source_folders <- do.call(c,
-                                      lapply(
-                                        paste0(dirs, "/source = "),
-                                        function(x) {grep(x, files)}
-                                      )
+  dirs_with_source_folders <- do.call(
+    c,
+    lapply(
+      paste0(dirs, "/source = "),
+      function(x) {
+        grep(x, files)
+      }
+    )
   )
 
   # Get a data frame with the initial file structure of the project
@@ -40,13 +43,14 @@ parse_project_structure <- function(template_list) {
   # If there are no directories with source folders,
   # returning file_struc[-integer(0),] won't work
   if (identical(dirs_with_source_folders, integer(0))) {
-    rbind(file_struc,
-          dir_struc)
+    rbind(
+      file_struc,
+      dir_struc
+    )
   } else {
     rbind(
-      file_struc[-dirs_with_source_folders,],
+      file_struc[-dirs_with_source_folders, ],
       dir_struc
     )
   }
-
 }

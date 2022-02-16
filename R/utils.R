@@ -39,6 +39,6 @@ has_file_ext <- function(path) {
 #' cat(readLines(template_demo_project()), sep = "\n")
 template_demo_project <- function(name = "demo-proj") {
   system.file(paste0("templates/yaml-files/", name, ".yaml"),
-              package = "templatr"
-              )
+    package = "templatr"
+  )
 }

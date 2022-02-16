@@ -7,9 +7,11 @@ create_source_directory <- function(path, source) {
   } else if (!fs::dir_exists(source)) {
     usethis::ui_stop("{usethis::ui_path(source)} does not exist.")
   }
-  fs::dir_copy(path = source,
-               new_path = path,
-               overwrite = FALSE)
+  fs::dir_copy(
+    path = source,
+    new_path = path,
+    overwrite = FALSE
+  )
   usethis::ui_done("Copying {usethis::ui_path(source)} to {usethis::ui_path(path)}")
   invisible(TRUE)
 }

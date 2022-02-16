@@ -36,18 +36,17 @@ Path to the newly created project (invisibly).
 Create New Project
 }
 \examples{
-
 \dontrun{
-  # Bare bones project with no existing content
-  new_project(
-    path = "~/Desktop/templatr-demo/",
-    template = template_demo_project()
-  )
-  # Project with files that have some structure
-  new_project(
-    path = "~/Desktop/templatr-demo/",
-    template = template_demo_project("demo-proj-source")
-  )
+# Bare bones project with no existing content
+new_project(
+  path = "~/Desktop/templatr-demo/",
+  template = template_demo_project()
+)
+# Project with files that have some structure
+new_project(
+  path = "~/Desktop/templatr-demo/",
+  template = template_demo_project("demo-proj-source")
+)
 }
 
 }

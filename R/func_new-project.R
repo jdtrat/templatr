@@ -1,12 +1,12 @@
 
 # Utility function, returns character from project structure with info needed to create files/directories
 which_to_create <- function(proj_structure, type) {
-  proj_structure[proj_structure$type == type & is.na(proj_structure$source),]$name
+  proj_structure[proj_structure$type == type & is.na(proj_structure$source), ]$name
 }
 
 # Utility function, returns data frame from project structure with info needed to copy files/directories
 which_to_copy <- function(proj_structure, type) {
-  proj_structure[proj_structure$type == type & !is.na(proj_structure$source),]
+  proj_structure[proj_structure$type == type & !is.na(proj_structure$source), ]
 }
 
 #' Create New Project
@@ -30,24 +30,22 @@ which_to_copy <- function(proj_structure, type) {
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
-#'   # Bare bones project with no existing content
-#'   new_project(
-#'     path = "~/Desktop/templatr-demo/",
-#'     template = template_demo_project()
-#'   )
-#'   # Project with files that have some structure
-#'   new_project(
-#'     path = "~/Desktop/templatr-demo/",
-#'     template = template_demo_project("demo-proj-source")
-#'   )
+#' # Bare bones project with no existing content
+#' new_project(
+#'   path = "~/Desktop/templatr-demo/",
+#'   template = template_demo_project()
+#' )
+#' # Project with files that have some structure
+#' new_project(
+#'   path = "~/Desktop/templatr-demo/",
+#'   template = template_demo_project("demo-proj-source")
+#' )
 #' }
 #'
 new_project <- function(path, template,
                         rstudio = rstudioapi::isAvailable(),
                         open = rlang::is_interactive()) {
-
   cur_dir <- getwd()
   template <- parse_proj_template(template)
 
@@ -137,14 +135,13 @@ create_local_new_project <- function(dir = fs::file_temp("testproj"),
                                      template = template_demo_project(),
                                      env = parent.frame(),
                                      rstudio = FALSE) {
-
   if (fs::dir_exists(dir)) {
     usethis::ui_stop("Target {usethis::uicode('dir')} {usethis::uipath(dir)} already exists.")
   }
 
 
   old_project <- proj_get_() # this could be `NULL`, i.e. no active project
-  old_wd <- getwd()          # not necessarily same as `old_project`
+  old_wd <- getwd() # not necessarily same as `old_project`
 
   withr::defer(
     {
@@ -170,7 +167,4 @@ create_local_new_project <- function(dir = fs::file_temp("testproj"),
   setwd(usethis::proj_get())
 
   invisible(usethis::proj_get())
-
 }
-
-

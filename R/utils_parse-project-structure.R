@@ -9,11 +9,13 @@ parse_proj_directories <- function(template_list) {
 
 parse_proj_files <- function(template_list) {
   # Paste any directory names with file names
-  file_names <- do.call(c,
-                        lapply(
-                          template_list$project$structure, function(x) {
-                            paste0(names(x), "/", x[[1]])
-                          })
+  file_names <- do.call(
+    c,
+    lapply(
+      template_list$project$structure, function(x) {
+        paste0(names(x), "/", x[[1]])
+      }
+    )
   )
   # Clean any files at the top level directory
   file_names <- gsub("^\\/", "", file_names)
@@ -48,7 +50,6 @@ parse_proj_file_structure <- function(template_list) {
     lapply(
       file_names,
       function(x) {
-
         if (length(x) == 1) {
           info <- c(x, NA_character_)
         } else if (length(x) == 2) {
@@ -93,8 +94,9 @@ parse_proj_dir_structure <- function(file_structure,
   # splitting the latter ones by '/source = ' to return a list with character
   # vectors of length one or two.
   dir_names <- strsplit(
-    c(directories,
-      file_structure[source_folder_indices,]$name
+    c(
+      directories,
+      file_structure[source_folder_indices, ]$name
     ),
     "/source = "
   )
@@ -105,7 +107,6 @@ parse_proj_dir_structure <- function(file_structure,
     lapply(
       dir_names,
       function(x) {
-
         if (length(x) == 1) {
           info <- c(x, NA_character_)
         } else if (length(x) == 2) {
@@ -125,17 +126,17 @@ parse_proj_dir_structure <- function(file_structure,
 
   # Because initial_dir_df may have repeated directory rows, this returns one
   # row per directory with the correct source if applicable
-  do.call(rbind,
-          lapply(
-            split(initial_dir_df, as.factor(initial_dir_df$name)),
-            function(entry) {
-              if (nrow(entry) == 1) {
-                entry
-              } else {
-                entry[!is.na(entry$source),]
-              }
-            }
-          )
+  do.call(
+    rbind,
+    lapply(
+      split(initial_dir_df, as.factor(initial_dir_df$name)),
+      function(entry) {
+        if (nrow(entry) == 1) {
+          entry
+        } else {
+          entry[!is.na(entry$source), ]
+        }
+      }
+    )
   )
-
 }

@@ -1,0 +1,8 @@
+---
+title: "Example Document!"
+author: Jonathan Trattner
+date: August 5, 2021
+output: pdf_document
+---
+
+Here's an introductory report!
