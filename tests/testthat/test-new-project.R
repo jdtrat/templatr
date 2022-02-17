@@ -8,7 +8,7 @@ test_that("new_project() creates a project - demo template", {
   expect_equal(
     as.character(proj_contents),
     c(
-      "R", "R/01_import_data.R", "R/02_clean_data.R", "README.md",
+      "DESCRIPTION", "R", "R/01_import_data.R", "R/02_clean_data.R", "README.md",
       "data", "data/sample.csv", "reports", "stan-files"
     )
   )
@@ -45,7 +45,7 @@ test_that("new_project() creates a project - source template", {
   expect_equal(
     as.character(proj_contents),
       c(
-        "NEWS.md", "R", "R/01_import_data.R", "R/02_clean_data.R",
+        "DESCRIPTION", "NEWS.md", "R", "R/01_import_data.R", "R/02_clean_data.R",
         "R/03_model_data.R", "data", "data/head_mtcars.csv",
         "reports", "reports/01_intro.Rmd", "stan-files"
       )

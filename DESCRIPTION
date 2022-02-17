@@ -24,5 +24,7 @@ Imports:
     rlang,
     rstudioapi,
     yaml,
-    cli
+    cli,
+    desc,
+    glue
 VignetteBuilder: knitr

@@ -77,6 +77,9 @@ new_project <- function(path, template,
   create_directory(path)
   usethis::local_project(path, force = TRUE)
 
+  if (!"DESCRIPTION" %in% project_structure$name) {
+    use_templatr_description(project_name = template$project$name)
+  }
 
   dirs_to_create <- which_to_create(project_structure, "directory")
   dirs_to_copy <- which_to_copy(project_structure, "directory")
