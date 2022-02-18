@@ -114,6 +114,10 @@ new_project <- function(path, template,
     }
   }
 
+  if (!is.null(template$project$packages)) {
+    add_packages(template$project$packages)
+  }
+
   if (rstudio) {
     usethis::use_rstudio()
   } else {

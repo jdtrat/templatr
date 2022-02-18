@@ -13,6 +13,20 @@ test_that("new_project() creates a project - demo template", {
     )
   )
   expect_true(possibly_in_proj(dir))
+
+  expect_equal(
+    desc::desc_get_deps(
+      file.path(dir, "DESCRIPTION")
+      ),
+    data.frame(
+      type = "Imports",
+      package = c(
+      "dplyr", "ggplot2",
+      "jdtools", "targets"
+      ),
+      version = c("*", "*", ">= 0.0.1", "*")
+      )
+  )
 })
 
 test_that("new_project() creates a project - source template", {

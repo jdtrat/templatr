@@ -15,3 +15,16 @@ test_that("`description_defaults()` works", {
   expect_equal(d$Encoding, "UTF-8")
 
 })
+
+test_that("`check_pkg_type()` works", {
+
+  expect_equal(
+    check_pkg_type(c("dplyr", "targets",
+                     "jdtools", "jdtrat/jdtools",
+                     "shinysurveys", "ghee")
+    ),
+    c("standard", "standard", "github", "github",
+      "standard", "standard"),
+    ignore_attr = TRUE # ignore names
+  )
+})

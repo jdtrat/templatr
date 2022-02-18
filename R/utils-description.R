@@ -35,5 +35,61 @@ use_templatr_description <- function(project_name) {
   )
 }
 
+check_pkg_type <- function(packages) {
 
+  packages <- vapply(packages, function(x) {
+    if (grepl("/", x)) {
+      strsplit(x, "/")[[1]][2]
+    } else {
+      x
+    }
+  },
+  character(1), USE.NAMES = FALSE
+  )
 
+  rlang::check_installed(packages)
+
+  vapply(packages, function(x) {
+    if (grepl("/", x)) {
+      x <- strsplit(x, "/")[[1]][2]
+    }
+    info <- utils::packageDescription(x)
+
+    if (is.null(info$RemoteType)) {
+      if (!is.null(info$GithubRepo)) {
+        "github"
+      } else if (!is.null(info$Repository)) {
+        "standard"
+      }
+    } else if (info$RemoteType == "standard") {
+      "standard"
+    } else if (info$RemoteType == "github") {
+      "github"
+    }
+  },
+  character(1)
+  )
+}
+
+add_packages <- function(pkgs) {
+
+  types <- check_pkg_type(pkgs)
+  pkg <- names(types)
+
+  for (i in seq_along(types)) {
+    if (types[i] == "standard") {
+      desc::desc_set_dep(pkg[i], file = "DESCRIPTION")
+    } else if (types[i] == "github") {
+      info <- utils::packageDescription(pkg[i])
+      desc::desc_add_remotes(
+        paste0(info$GithubUsername, "/", info$GithubRepo),
+        file = "DESCRIPTION"
+        )
+      desc::desc_set_dep(
+        pkg[i], version = paste0(">= ", info$Version),
+        file = "DESCRIPTION"
+        )
+    }
+  }
+
+}

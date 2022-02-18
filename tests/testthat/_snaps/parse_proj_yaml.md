@@ -35,5 +35,11 @@
       $project$`git-ignore`
       [1] "data"               "R/01_import_data.R"
       
+      $project$renv
+      [1] TRUE
+      
+      $project$packages
+      [1] "dplyr"          "ggplot2"        "targets"        "jdtrat/jdtools"
+      
       
 
