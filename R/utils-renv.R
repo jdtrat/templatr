@@ -1,6 +1,6 @@
 
 init_quietly <- function(...) {
-  x <- capture.output(
+  x <- utils::capture.output(
     suppressMessages(
       renv::init(...)
     )
@@ -8,7 +8,7 @@ init_quietly <- function(...) {
 }
 
 snapshot_quietly <- function(...) {
-  x <- capture.output(
+  x <- utils::capture.output(
     suppressMessages(
       renv::snapshot(...)
     )
@@ -66,7 +66,8 @@ use_renv <- function(
 
   if (!fs::file_exists("DESCRIPTION")) {
     cli::cli_abort(
-      "{.path DESCRIPTION} file needed to initialize renv environment explicitly."
+      "{.path DESCRIPTION} file needed to initialize renv environment explicitly.
+      Ensure that the 'packages' field in {.arg template} is not empty."
       )
   }
 

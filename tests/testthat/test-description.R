@@ -18,6 +18,12 @@ test_that("`description_defaults()` works", {
 
 test_that("`check_pkg_type()` works", {
 
+  skip_if_not_installed("dplyr")
+  skip_if_not_installed("targets")
+  skip_if_not_installed("jdtools")
+  skip_if_not_installed("shinysurveys")
+  skip_if_not_installed("ghee")
+
   expect_equal(
     check_pkg_type(c("dplyr", "targets",
                      "jdtools", "jdtrat/jdtools",
