@@ -75,10 +75,24 @@ new_project <- function(path, template,
   challenge_home_directory(path)
 
   create_directory(path)
+
   usethis::local_project(path, force = TRUE)
 
   if (!"DESCRIPTION" %in% project_structure$name) {
     use_templatr_description(project_name = template$project$name)
+  }
+
+  if (!is.null(template$project$packages)) {
+    add_packages(template$project$packages)
+  }
+
+  if (!is.null(template$project$renv)) {
+    if (template$project$renv) {
+      use_renv(
+        path = path,
+        restart = FALSE
+      )
+    }
   }
 
   dirs_to_create <- which_to_create(project_structure, "directory")
@@ -114,11 +128,11 @@ new_project <- function(path, template,
     }
   }
 
-  if (!is.null(template$project$packages)) {
-    add_packages(template$project$packages)
-  }
-
   if (rstudio) {
+    # To avoid interactive overwriting prompt when using RStudio
+    fs::file_delete(
+      fs::dir_ls(path, regexp = ".Rproj$")
+    )
     usethis::use_rstudio()
   } else {
     usethis::ui_done("Writing a sentinel file {usethis::ui_path('.here')}")
