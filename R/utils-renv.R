@@ -58,17 +58,15 @@ lockfile_pkgs <- function() {
 #' @return The project path where the renv environment was initialized,
 #'   invisibly.
 #' @export
-use_renv <- function(
-  path = usethis::proj_get,
-  restart = rlang::is_interactive()
-) {
+use_renv <- function(path = usethis::proj_get,
+                     restart = rlang::is_interactive()) {
   rlang::check_installed("renv")
 
   if (!fs::file_exists("DESCRIPTION")) {
     cli::cli_abort(
       "{.path DESCRIPTION} file needed to initialize renv environment explicitly.
       Ensure that the 'packages' field in {.arg template} is not empty."
-      )
+    )
   }
 
   cli::cli_alert_success("Initializing {.pkg renv}")
@@ -81,11 +79,10 @@ use_renv <- function(
   snapshot_quietly(
     project = path,
     prompt = FALSE
-    )
+  )
 
   usethis::ui_done("Adding the following packages to
                    {usethis::ui_path('renv.lock')}: {usethis::ui_value(lockfile_pkgs())}")
 
   invisible(path)
 }
-

@@ -17,15 +17,15 @@ test_that("new_project() creates a project - demo template", {
   expect_equal(
     desc::desc_get_deps(
       file.path(dir, "DESCRIPTION")
-      ),
+    ),
     data.frame(
       type = "Imports",
       package = c(
-      "dplyr", "ggplot2",
-      "jdtools", "targets"
+        "dplyr", "ggplot2",
+        "jdtools", "targets"
       ),
       version = c("*", "*", ">= 0.0.1", "*")
-      )
+    )
   )
 })
 
@@ -53,17 +53,17 @@ test_that("new_project() creates a project - source template", {
   proj_contents <- fs::dir_ls(dir, recurse = TRUE)
   # Get project contents
   proj_contents <- gsub(paste0(fs::path_dir(proj_contents[1]), "/"),
-                        replacement = "", proj_contents
+    replacement = "", proj_contents
   )
 
   expect_equal(
     as.character(proj_contents),
-      c(
-        "DESCRIPTION", "NEWS.md", "R", "R/01_import_data.R", "R/02_clean_data.R",
-        "R/03_model_data.R", "data", "data/head_mtcars.csv",
-        "reports", "reports/01_intro.Rmd", "stan-files"
-      )
+    c(
+      "DESCRIPTION", "NEWS.md", "R", "R/01_import_data.R", "R/02_clean_data.R",
+      "R/03_model_data.R", "data", "data/head_mtcars.csv",
+      "reports", "reports/01_intro.Rmd", "stan-files"
     )
+  )
 
   # Ensure created project contents and original source are equal
   expect_equal(
@@ -93,5 +93,4 @@ test_that("new_project() creates a project - source template", {
     ),
     report_file_conents
   )
-
 })

@@ -44,7 +44,6 @@ test_that("`create_source_directory()` does not overwrite a file", {
 })
 
 test_that("`create_source_directory()` needs a valid source", {
-
   tmp <- fs::file_temp()
 
   expect_error(
@@ -54,7 +53,6 @@ test_that("`create_source_directory()` needs a valid source", {
     ),
     regexp = "does not exist"
   )
-
 })
 
 test_that("`create_source_directory()` copies a directory successfully", {
@@ -101,11 +99,9 @@ test_that("`create_file()` does not overwrite an existing file", {
   expect_true(
     fs::is_file(tmp)
   )
-
 })
 
 test_that("`create_file()` creates a (blank) file successfully", {
-
   tmp <- fs::file_temp()
   fs::dir_create(tmp)
 
@@ -122,8 +118,7 @@ test_that("`create_file()` creates a (blank) file successfully", {
   expect_equal(
     readLines(file.path(tmp, "temp.R")),
     character(0)
-    )
-
+  )
 })
 
 
@@ -177,4 +172,3 @@ test_that("`create_source_file()` copies a file successfully", {
     )
   )
 })
-
