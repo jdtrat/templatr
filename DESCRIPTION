@@ -28,5 +28,6 @@ Imports:
     cli,
     desc,
     glue,
-    renv
+    renv,
+    crayon
 VignetteBuilder: knitr
