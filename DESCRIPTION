@@ -12,6 +12,7 @@ Language: es
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Suggests: 
+    jsonlite,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
@@ -24,5 +25,9 @@ Imports:
     rlang,
     rstudioapi,
     yaml,
-    cli
+    cli,
+    desc,
+    glue,
+    renv,
+    crayon
 VignetteBuilder: knitr

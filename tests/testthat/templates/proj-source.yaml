@@ -4,15 +4,15 @@ project:
     - NEWS.md
     - R:
       - 01_import_data.R
-        - source = "templates/R/temp_import_data.R"
+        - !source = "templates/R/temp_import_data.R"
       - 02_clean_data.R
-        - source = "templates/R/temp_clean_data.R"
+        - !source = "templates/R/temp_clean_data.R"
       - 03_model_data.R
     - data:
-      - source = "templates/data"
+      - !source = "templates/data"
     - stan-files:
     - reports:
-      - source = "templates/reports"
+      - !source = "templates/reports"
   git-ignore:
     - "data"
     - "R/01_import_data.R"

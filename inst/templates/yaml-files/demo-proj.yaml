@@ -12,3 +12,10 @@ project:
   git-ignore:
     - "data"
     - "R/01_import_data.R"
+  renv: false
+  packages:
+    - dplyr
+    - ggplot2
+    - targets
+    - jdtrat/jdtools
+
