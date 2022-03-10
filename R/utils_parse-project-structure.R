@@ -1,5 +1,33 @@
+
 parse_proj_template <- function(template) {
-  yaml::read_yaml(file = template)
+
+  parse_template_handlers <- list(
+    `source` = function(x) {
+      paste0("!source ", x)
+    },
+    `source_expr` = function(x) {
+      paste0("!source_expr ", x)
+    }
+  )
+
+  if (fs::is_file(template)) {
+    yaml::yaml.load_file(
+      input = template,
+      eval.expr = FALSE,
+      handlers = parse_template_handlers
+    )
+  } else if (is.character(template)) {
+    yaml::yaml.load(
+      string = template,
+      eval.expr = FALSE,
+      handlers = parse_template_handlers
+    )
+  } else {
+   cli::cli_abort(
+     "{.arg template} must be a file path or character string."
+     )
+  }
+
 }
 
 parse_proj_directories <- function(template_list) {
@@ -41,7 +69,7 @@ parse_proj_file_structure <- function(template_list) {
   # vectors of length one or two.
   file_names <- strsplit(
     parse_proj_files(template_list = template_list),
-    split = " - source = "
+    split = " - !source| -!source"
   )
 
   # Create data frame for file structures with 'source' = NA as appropriate
@@ -60,7 +88,7 @@ parse_proj_file_structure <- function(template_list) {
 
         data.frame(
           name = info[1],
-          source = gsub("(\"|\')", "", info[2]),
+          source = info[2],
           type = "file"
         )
       }
@@ -98,7 +126,7 @@ parse_proj_dir_structure <- function(file_structure,
       directories,
       file_structure[source_folder_indices, ]$name
     ),
-    "/source = "
+    "/!source"
   )
 
   # Create initial data frame for directories with 'source' = NA as appropriate
@@ -117,7 +145,7 @@ parse_proj_dir_structure <- function(file_structure,
 
         data.frame(
           name = info[1],
-          source = gsub("(\"|\')", "", info[2]),
+          source = info[2],
           type = "directory"
         )
       }
@@ -139,4 +167,27 @@ parse_proj_dir_structure <- function(file_structure,
       }
     )
   )
+}
+
+# Wrap the source column for expressions
+wrap_source <- function(source_column) {
+  expr_indices <- grep("^_expr", source_column)
+
+  if (identical(expr_indices, integer(0))) {
+    return(
+      source_column
+    )
+  } else {
+    c(
+      source_column[-expr_indices],
+      paste0(
+        "expression(",
+        trimws(
+          gsub("_expr", "", source_column[expr_indices])
+        ),
+        ")"
+      )
+    )
+  }
+
 }

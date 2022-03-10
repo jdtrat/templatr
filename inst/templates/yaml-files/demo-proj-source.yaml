@@ -2,21 +2,21 @@ project:
   name: templatr-demo
   structure:
     - .Renviron
-      - source = "inst/templates/source-files/sample.Renviron"
+      - !source = "inst/templates/source-files/sample.Renviron"
     - README.md
-      - source = "inst/templates/source-files/README.md"
+      - !source = "inst/templates/source-files/README.md"
     - NEWS.md
     - R:
       - 01_import_data.R
-        - source = "inst/templates/source-files/R/temp_import_data.R"
+        - !source = "inst/templates/source-files/R/temp_import_data.R"
       - 02_clean_data.R
-        - source = "inst/templates/source-files/R/temp_clean_data.R"
+        - !source = "inst/templates/source-files/R/temp_clean_data.R"
       - 03_model_data.R
     - data:
-      - source = "inst/templates/source-files/data"
+      - !source = "inst/templates/source-files/data"
     - stan-files:
     - reports:
-      - source = "inst/templates/source-files/reports"
+      - !source = "inst/templates/source-files/reports"
   git-ignore:
     - "data"
     - "R/01_import_data.R"

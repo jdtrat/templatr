@@ -58,22 +58,17 @@ test_that("`parse_proj_file_structure` works", {
     ),
     data.frame(
       stringsAsFactors = FALSE,
-      name = c(
-        ".Renviron", "README.md",
-        "NEWS.md", "R/01_import_data.R", "R/02_clean_data.R",
-        "R/03_model_data.R",
-        "data/source = \"inst/templates/source-files/data\"",
-        "reports/source = \"inst/templates/source-files/reports\""
-      ),
-      source = c(
-        "inst/templates/source-files/sample.Renviron",
-        "inst/templates/source-files/README.md", NA, "inst/templates/source-files/R/temp_import_data.R",
-        "inst/templates/source-files/R/temp_clean_data.R",
-        NA,
-        NA,
-        NA
-      ),
-      type = "file"
+      name = c(".Renviron","README.md",
+               "NEWS.md","R/01_import_data.R","R/02_clean_data.R",
+               "R/03_model_data.R",
+               "data/!source = \"inst/templates/source-files/data\"",
+               "reports/!source = \"inst/templates/source-files/reports\""),
+      source = c(" = \"inst/templates/source-files/sample.Renviron\"",
+                 " = \"inst/templates/source-files/README.md\"",NA,
+                 " = \"inst/templates/source-files/R/temp_import_data.R\"",
+                 " = \"inst/templates/source-files/R/temp_clean_data.R\"",NA,NA,NA),
+      type = c("file","file","file","file",
+               "file","file","file","file")
     )
   )
 })
